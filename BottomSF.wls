@@ -4,6 +4,7 @@
 (*Globals*)
 sizeToChar = <|200->"\|01fac2",50->"\|01f496",10->"\:2728",5->"\|01f97a",1->",",0->"\:2764\:fe0f"|>;
 byteSeparator = "\|01f449\|01f448";
+
 (*Encoder*)
 encode[inString_]:=Block[{inputStr,outputStr,currentVal,convert,target},
 	inputStr=ToCharacterCode[inString,"UTF-8"];
@@ -22,6 +23,7 @@ encode[inString_]:=Block[{inputStr,outputStr,currentVal,convert,target},
 	convert/@inputStr;
 	Return@outputStr
 ];
+
 (*Decoder*)
 decode[encodedString_]:=Block[{charToSize,countInstances,splitString},
 	charToSize=Association[Rule@@@Reverse/@KeyValueMap[List,sizeToChar]];
@@ -29,13 +31,16 @@ decode[encodedString_]:=Block[{charToSize,countInstances,splitString},
 	splitString=StringSplit[encodedString,byteSeparator];
 	Return@FromCharacterCode[Total/@countInstances/@splitString,"UTF-8"]
 ];
+
 (*Output writer*)
 writeOutput[string_,filename_]:=Block[{file},
 	file=OpenWrite[filename,CharacterEncoding->"UTF-8"];
 	WriteString[file,string];
 	Close@file;
 ]
+
 printUsage[]:=Print["Usage: wolframscript "<>$ScriptCommandLine[[1]]<>" [--bottomify/--regress] input_file output_file"];
+
 main[]:=Block[{file},
 	If[Length@$ScriptCommandLine<4,
 		printUsage[];
