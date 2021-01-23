@@ -1,1 +1,2 @@
 *.wls            text diff=mathematica
+*.wls linguist-language=mathematica
