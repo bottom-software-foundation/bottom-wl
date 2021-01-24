@@ -57,7 +57,7 @@ main[]:=Block[{file},
 	file = Import[$ScriptCommandLine[[3]],"Text",CharacterEncoding -> "UTF-8"];
 	If[!FailureQ@file,
 		writeOutput[decode@file,$ScriptCommandLine[[4]]],
-		Print@"Failed to import file"
+		Print@"Failed to import input file."
 	];,
 	_,
 	printUsage[];
