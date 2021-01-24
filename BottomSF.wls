@@ -6,23 +6,22 @@ sizeToChar = <|200 -> "\|01fac2", 50 -> "\|01f496", 10 -> "\:2728", 5 -> "\|01f9
 byteSeparator = "\|01f449\|01f448";
 
 (*Encoder*)
-encode[inString_]:=Block[{inputStr,outputStr,currentVal,convert,target},
-	inputStr = ToCharacterCode[inString,"UTF-8"];
-	outputStr = "";
+encode[inString_]:=Block[{inputStr, sizeList, currentVal, convert, target},
+	inputStr = ToCharacterCode[inString, "UTF-8"];
 	convert[char_]:=(
+		sizeList = {};
 		currentVal = char;
-		target := First@Select[Keys@sizeToChar,currentVal-#>=0&];
+		target := First@Select[Keys@sizeToChar, currentVal >= #&];
 		If[target == 0,
-			outputStr = outputStr <> sizeToChar@0,
+			AppendTo[sizeList, 0],
 			While[target != 0,
-				outputStr = outputStr <> sizeToChar@target;
+				AppendTo[sizeList, target];
 				currentVal -= target;
 			]
 		];
-		outputStr = outputStr <> byteSeparator;
+		Return@StringJoin[sizeToChar /@ sizeList, byteSeparator];
 	);
-	convert /@ inputStr;
-	Return@outputStr
+	Return@StringJoin[convert /@ inputStr]
 ];
 
 (*Decoder*)
