@@ -1,5 +1,5 @@
-# bottom-mma
-An implementation of the humorous [Bottom encoding format](https://github.com/bottom-software-foundation/spec) in Mathematica, using WolframScript so that it can be run from the command line.
+# bottom-wl
+An implementation of the humorous [Bottom encoding format](https://github.com/bottom-software-foundation/spec) in Mathematica's Wolfram Language, using WolframScript so that it can be run from the command line.
 
 Script usage:
 ```sh
